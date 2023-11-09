@@ -7,7 +7,9 @@ namespace MarcoMath.Distributions {
     public class CombinedDistribution : Distribution
     {
         private List<Distribution> _distributions { get; set; }
-        
+
+
+        public CombinedDistribution(Distribution dist1, Distribution dist2) : this(new List<Distribution>() { dist1, dist2 }) { }
 
         public CombinedDistribution(List<Distribution> distributions) : base()
         {
