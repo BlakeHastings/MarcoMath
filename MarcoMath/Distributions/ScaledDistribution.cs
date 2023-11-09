@@ -17,7 +17,7 @@ namespace MarcoMath.Distributions
 
         public override double EvaluateX(double x)
         {
-            return _distribution.EvaluateX(x * _scalar);
+            return _distribution.EvaluateX(x) * _scalar;
         }
 
         protected override void CalcUpperLimit()
