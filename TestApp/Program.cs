@@ -5,6 +5,7 @@ using ScottPlot.WinForms;
 using System.Windows;
 using MarcoArray = MarcoMath.Distributions;
 using MarcoMath.Distributions;
+using MarcoMath.Distributions.Extensions;
 using TestApp;
 using BenchmarkDotNet.Running;
 using MathNet.Numerics.Integration;
@@ -68,65 +69,54 @@ double[] y = new double[samplingNumber];
 var evaluator = new DistributionEvaluator(-90, 90, samplingNumber);
 var sampler = new RejectionSampler(-90, 90);
 
-List<Distribution> distListarry = new List<Distribution>() {
-    new GaussianDistribution(-50, 2, 1),
-    new GaussianDistribution(50, 3, 1.5),
-    new GaussianDistribution(0, 10, 0.7),
-    new GaussianDistribution(50, 0.4, -0.1)
+List<Distribution> distList = new List<Distribution>() {
+    new GaussianDistribution(0,4,1),
+    new GaussianDistribution(0,4,1).Scale(2),
 };
 
-List<Distribution> distListarry2 = new List<Distribution>() {
-    new UnitaryDistribution(0, 10, 1),
-    new UnitaryDistribution(-90, 90,0.1),
+var distsToDraw = new List<double[]>();
+distList.ForEach(dist => distsToDraw.Add(evaluator.Evaluate(dist)));
+DisplayGraphs(x, distsToDraw);
 
-};
+//CombinedDistribution arrayCombiDist = new CombinedDistribution(distListarry);
+//arrayCombiDist.Normalize(-90, 90);
 
-List<Distribution> dist1 = new List<Distribution>() {
-    new GaussianDistribution(0, 100, 1)
-};
+//var y2 = evaluator.Evaluate(arrayCombiDist);
 
-var y4 = evaluator.Evaluate(new CombinedDistribution(dist1));
-DisplayGraphs(x, new List<double[]>() { y4 });
+//DisplayGraphs(x, new List<double[]>() { y2 });
 
-CombinedDistribution arrayCombiDist = new CombinedDistribution(distListarry);
-arrayCombiDist.Normalize(-90, 90);
+//double[] doubles = new double[1000];
+//var dist = (Distribution)arrayCombiDist;
 
-var y2 = evaluator.Evaluate(arrayCombiDist);
+//for (int i = 0; i < doubles.Length; i++)
+//{
+//    doubles[i] = sampler.Sample(dist);
+//}
 
-DisplayGraphs(x, new List<double[]>() { y2 });
+//StringBuilder stringBuilder = new StringBuilder();
+//doubles.ToList().ForEach(x =>
+//{
+//    stringBuilder.AppendLine(x.ToString());
+//});
 
-double[] doubles = new double[1000];
-var dist = (Distribution)arrayCombiDist;
+//File.Delete("C:\\Users\\Marco\\Downloads\\output.txt");
+//File.WriteAllText("C:\\Users\\Marco\\Downloads\\output.txt", stringBuilder.ToString());
 
-for (int i = 0; i < doubles.Length; i++)
-{
-    doubles[i] = sampler.Sample(dist);
-}
+//uint numberOfBins = 179 * 10;
+//var bins = Histogram.GetHistBins(doubles.ToList(), -90, 90, numberOfBins);
+//var ticks = CreateXTics(-90, 90, (int)numberOfBins);
 
-StringBuilder stringBuilder = new StringBuilder();
-doubles.ToList().ForEach(x =>
-{
-    stringBuilder.AppendLine(x.ToString());
-});
+//var dBins = new double[bins.Length];
+//for (int i = 0; i < bins.Length; i++)
+//{
+//    dBins[i] = (double)bins[i];
+//}
 
-File.Delete("C:\\Users\\Marco\\Downloads\\output.txt");
-File.WriteAllText("C:\\Users\\Marco\\Downloads\\output.txt", stringBuilder.ToString());
+//var plt = new Plot(400, 300);
+//plt.AddScatter(ticks, dBins);
+//new FormsPlotViewer(plt).ShowDialog();
 
-uint numberOfBins = 179 * 10;
-var bins = Histogram.GetHistBins(doubles.ToList(), -90, 90, numberOfBins);
-var ticks = CreateXTics(-90, 90, (int)numberOfBins);
-
-var dBins = new double[bins.Length];
-for (int i = 0; i < bins.Length; i++)
-{
-    dBins[i] = (double)bins[i];
-}
-
-var plt = new Plot(400, 300);
-plt.AddScatter(ticks, dBins);
-new FormsPlotViewer(plt).ShowDialog();
-
-//DisplayGraphs(x, new List<double[]>() { doubles });
+////DisplayGraphs(x, new List<double[]>() { doubles });
 
 
-var summary = BenchmarkRunner.Run(typeof(Program).Assembly);
+//var summary = BenchmarkRunner.Run(typeof(Program).Assembly);
