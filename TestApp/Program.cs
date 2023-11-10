@@ -70,8 +70,7 @@ var evaluator = new DistributionEvaluator(-90, 90, samplingNumber);
 var sampler = new RejectionSampler(-90, 90);
 
 List<Distribution> distList = new List<Distribution>() {
-    new GaussianDistribution(0,4,1),
-    new GaussianDistribution(0,4,1).Shift(20),
+    new CombinedDistribution(new List<Distribution>() {new GaussianDistribution(0, 4, 1), new GaussianDistribution(10, 4, 1) }).Shift(80),
 };
 
 var distsToDraw = new List<double[]>();

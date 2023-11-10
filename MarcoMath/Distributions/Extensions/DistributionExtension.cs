@@ -19,7 +19,7 @@ namespace MarcoMath.Distributions.Extensions
 
         public static CombinedDistribution Add(this Distribution distribution, Distribution distribution2)
         {
-            return new CombinedDistribution(distribution2, distribution2);
+            return new CombinedDistribution(distribution, distribution2);
         }
 
         public static CombinedDistribution AddRange(this Distribution distribution, List<Distribution> distributions)
