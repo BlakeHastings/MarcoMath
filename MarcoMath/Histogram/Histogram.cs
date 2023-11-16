@@ -30,15 +30,17 @@ namespace MarcoMath.Histogram
 
             // sort angles into bins
             uint currBin = 0;
+            double _currentanlge;
             for (int i = 0; i < angledatapoints.Count; i++)
             {
-                if (angledatapoints[i] > minAngle + bininterval * currBin)
+                if (angledatapoints[i] > minAngle + bininterval * (currBin))
                 {
+                    _currentanlge = angledatapoints[i];
                     currBin++;
                     i--;
                     continue;
                 }
-                bins[currBin]++;
+                bins[currBin-1]++;
             }
             return bins;
         }

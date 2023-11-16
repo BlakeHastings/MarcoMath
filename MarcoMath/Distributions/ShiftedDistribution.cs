@@ -9,9 +9,15 @@ namespace MarcoMath.Distributions
         private Distribution _distribution { get; set; }
         private double _offset { get; set; }
 
-        public ShiftedDistribution(double offset, Distribution distribution) {
+        public ShiftedDistribution(double offset, Distribution distribution) : base()
+        {
+            
             _distribution = distribution;
             _offset = offset;
+            CalcUpperLimit();
+            //_upperLimit = distribution.GetUpperLimit();
+            
+            
         }
 
         public override double EvaluateX(double x)

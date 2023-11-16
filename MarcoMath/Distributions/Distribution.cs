@@ -16,6 +16,7 @@ namespace MarcoMath.Distributions
         public Distribution(double normalizationFactor) 
         {
             _normalizationFactor = normalizationFactor;
+            CalcUpperLimit();
         }
 
         public abstract double EvaluateX(double x);

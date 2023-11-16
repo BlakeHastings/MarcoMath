@@ -25,12 +25,14 @@ namespace MarcoMath.Samplers
         {
             Random random = new Random();
             var angleDif = (_maxAngle - _minAngle);
-            var middle = (Math.Abs(_maxAngle - _minAngle) / 2);
+            var middle = (_minAngle + _maxAngle) / 2;
+            double _upperlimit = distribution.GetUpperLimit();
 
             for (int i = 0; i < 9000; i++)
             {
-                double unitaryRandom = random.NextDouble() * angleDif - middle;
-                double y = random.NextDouble() * distribution.GetUpperLimit();
+                //remove
+                double unitaryRandom = random.NextDouble() * angleDif + _minAngle;
+                double y = random.NextDouble() *_upperlimit;
                 var result = distribution.EvaluateX(unitaryRandom);
                 if (result > y)
                     return unitaryRandom;
